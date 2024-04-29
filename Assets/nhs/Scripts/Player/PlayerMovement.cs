@@ -22,7 +22,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private BoxCollider2D groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
-    
+
+
+    float ObjPositionX;
+    float CameraPositionX;
+
     void Update()
     {
         if (isDashing)
@@ -67,8 +71,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition).x);
+        CameraPositionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+        ObjPositionX = gameObject.transform.position.x;
+        Vector3 localScale = transform.localScale;
 
+        if (CameraPositionX < ObjPositionX)
+        {
+            
+            localScale.x = -1f;
+        }
+        if (CameraPositionX > ObjPositionX)
+        {
+            localScale.x = 1f;
+        }
+
+        transform.localScale = localScale;
+
+
+        /*
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
@@ -76,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
+        */
     }
 
     private IEnumerator Dash()
@@ -84,7 +105,8 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        rb.velocity = new Vector2(horizontal * dashingPower, 0f);
+        //rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
