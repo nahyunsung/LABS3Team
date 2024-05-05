@@ -9,7 +9,7 @@ public abstract class Skill : MonoBehaviour
     public Animation motion;
     public ParticleSystem ef;
 
-    public int PagePatenNmber; // index번호로 저장 -> 0 = 1페이지
+    public int PageIndex; // index번호로 저장 -> 0 = 1페이지
 
     //무적인지, 데미지는 몇인지, 등의 변수 추가
     abstract public void StartSkill();

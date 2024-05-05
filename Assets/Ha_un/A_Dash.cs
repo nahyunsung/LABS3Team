@@ -29,12 +29,15 @@ public class A_Dash : Skill
         {
             transform.position += new Vector3(-dashLen, 0, 0);
             hit = Physics2D.Raycast(transform.position, -transform.right, dashLen);
+            Debug.Log("이동 실행");
         }
         else
         {
             transform.position += new Vector3(dashLen, 0, 0);
             hit = Physics2D.Raycast(transform.position, transform.right, dashLen);
+            Debug.Log("이동 실행");
         }
+        
         if (hit.collider.gameObject != null)
         {
             if (hit.collider.gameObject.tag != "Player")

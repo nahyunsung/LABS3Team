@@ -19,7 +19,7 @@ public class BossManager : MonoBehaviour // 소리 루프 담당
     private void Start()
 	{
 		Boss = GameObject.FindWithTag("Boss").GetComponent<BossManagerInterface>();
-	}
+    }
     float skillTime = 0.0f;
     float loopTime = 0.0f;
     int nowPage = 0;

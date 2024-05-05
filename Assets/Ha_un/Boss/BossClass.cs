@@ -6,7 +6,6 @@ public class BossClass : MonoBehaviour
 {
     
 
-
     protected List<List<Skill>> SkillsList = new List<List<Skill>>();
 
 

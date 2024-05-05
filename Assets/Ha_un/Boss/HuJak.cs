@@ -15,7 +15,7 @@ public class HuJak : BossClass , BossManagerInterface, BossBattleInterface
     //List<List<Skill>> SkillsList = new List<List<Skill>>();
     void Start()
     {
-        Start_SkillSetting();
+        
         rb = GetComponent<Rigidbody2D>();
         GameDate = GameObject.Find("Modified Data Object").GetComponent<Modified_Data>();
         bossManager = GameObject.Find("BossManager").GetComponent<BossManager>();
@@ -25,13 +25,19 @@ public class HuJak : BossClass , BossManagerInterface, BossBattleInterface
         bossHP = maxHP;
         Debug.Log(nowPageNUmber);
         //리셋할거 -_-
+        for (int i = 0; i < MaxPage_indexNumber + 1; i++)
+        {
+            SkillsList.Add(new List<Skill>());
+        }
+        Start_SkillSetting();
+
     }
     void Start_SkillSetting()
     {
         foreach (var item in Skills)
         {
             item.Start_(this);
-            SkillsList[item.PagePatenNmber].Add(item);
+            SkillsList[item.PageIndex].Add(item);
         }
     }
     
@@ -44,51 +50,13 @@ public class HuJak : BossClass , BossManagerInterface, BossBattleInterface
 
     public void BossManagerStartSkill()
     {
-        int a = (Random.Range(0, 10000 * SkillsList[nowPageNUmber].Count)) % SkillsList[nowPageNUmber].Count;
-        SkillsList[nowPageNUmber][a].StartSkill();
+        
     }
     
 
     //---------------------------------테스트 용 정보 열람 허용 코드들
     public string BossPageCheck() { return nowPageNUmber.ToString(); }
     
-    public float dashLenght;
-    void A_DashSkill()
-    {
-        RaycastHit2D hit;
-        if (transform.position.x - player.transform.position.x > 0)
-        {
-            transform.position += new Vector3(-dashLenght, 0, 0);
-            hit = Physics2D.Raycast(transform.position, -transform.right, dashLenght);
-        }
-        else
-        {
-            transform.position += new Vector3(dashLenght, 0, 0);
-            hit = Physics2D.Raycast(transform.position, transform.right, dashLenght);
-        }
-        if (hit.collider.gameObject != null)
-        {
-            if (hit.collider.gameObject.tag != "Player")
-            {
-                Debug.Log("보스 \"대쉬\" 스킬에 맞음! 구현 위치");
-                //hit.transform.gameObject.   플레이어 공격 함수
-            }
-        }
-        else Debug.Log("객체 없음 -> 버그 발생");
-        
-    }
-    bool isGrounded;
-    bool wasGroundedLastFrame;
-    public float jumpForce = 10f;
-    void B_JumpSkill()
-    {
-        //isGrounded = Physics2D.OverlapCircle(transform.position, 0.16f, groundLayer);
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-    }
-    void Cutting()
-    {
-
-    }
 
 
 
@@ -138,6 +106,12 @@ public class HuJak : BossClass , BossManagerInterface, BossBattleInterface
 
     void BossManagerInterface.BossManagerStartSkill()
     {
-
+        if(SkillsList[nowPageNUmber].Count == 0)
+        {
+            Debug.Log("아직 해당 패턴에 할당된 스킬이 없습니다! 해당 페이지 인덱스 번호가 PageIndex에 할당된 스킬을 Hujak.Skills 리스트에 넣어 주세요");
+            return;
+        }
+        int a = (Random.Range(0, 10000 * SkillsList[nowPageNUmber].Count)) % SkillsList[nowPageNUmber].Count;
+        SkillsList[nowPageNUmber][a].StartSkill();
     }
 }
