@@ -582,7 +582,8 @@ MonoBehaviour:
   NextPageHP: 14000000140000001e0000001e000000
   sumHP: 0
   MaxHP: 100
-  Skills: []
+  Skills:
+  - {fileID: 686266519390228341, guid: f5d8062444238a246ba71e330b58a7b3, type: 3}
   PageText: {fileID: 1806905586}
 --- !u!1 &1018954160
 GameObject:
