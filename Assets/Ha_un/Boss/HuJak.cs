@@ -114,4 +114,10 @@ public class HuJak : BossClass , BossManagerInterface, BossBattleInterface
         int a = (Random.Range(0, 10000 * SkillsList[nowPageNUmber].Count)) % SkillsList[nowPageNUmber].Count;
         SkillsList[nowPageNUmber][a].StartSkill();
     }
+    public override void AniMationStart(AnimationClip ap)
+    {
+        Animator AA = GetComponent<Animator>();
+        AA.Play(ap.name);
+        Debug.Log("보스에서 모션 실행");
+    }
 }
