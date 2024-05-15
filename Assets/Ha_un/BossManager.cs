@@ -12,7 +12,10 @@ public class BossManager : MonoBehaviour // 소리 루프 담당
 
 	AudioSource AS;
 
-	BossManagerInterface Boss;
+    public Transform MapRight;
+    public Transform MapLeft;
+
+    BossManagerInterface Boss;
     bool IsBossBattleStart = true;
     public float[] page_LoopTime = { 3.5f, 3.5f, 2.5f, 4.0f, 3.0f };
     public float[] page_SumTime = { 14f, 14f, 15f, 16f, 12f };
@@ -25,27 +28,12 @@ public class BossManager : MonoBehaviour // 소리 루프 담당
     int nowPage = 0;
     private void Update()
     {
-        /*
-        if (IsBossBattleStart)
-        {
-            skillTime += Time.deltaTime;
-            loopTime += Time.deltaTime;
-            if(loopTime > page_SumTime[nowPage])
-            {
-                loopTime = 0.0f;
-                skillTime = 0.0f;
-                AudioClipEnd();
-            }
-            if(skillTime > page_LoopTime[nowPage])
-            {
-                skillTime -= page_LoopTime[nowPage];
-                PatenStart();
-            }
-        }*/
+        
+
         skillTime += Time.deltaTime;
-        if (skillTime > 3.5f)
+        if (skillTime > page_LoopTime[Boss.NowPageNumber()])
         {
-            skillTime -= 3.5f;
+            skillTime -= page_LoopTime[Boss.NowPageNumber()];
             PatenStart();
         }
     }
@@ -66,4 +54,8 @@ public class BossManager : MonoBehaviour // 소리 루프 담당
 			// 노래 루프
 		}
 	}
+    public void NN()
+    {
+        Boss.NextPage();
+    }
 }
